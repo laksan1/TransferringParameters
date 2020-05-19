@@ -1,0 +1,119 @@
+﻿<Controls:MetroWindow x:Class="TransferringParameters.View.MainWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:viewmodel="clr-namespace:TransferringParameters.ViewModel"
+             xmlns:modelRevit="clr-namespace:TransferringParameters.Model"
+             mc:Ignorable="d" 
+            Title="The transfer of the values of project parameter" Height="599.6" Width="657.166"  WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+
+                <!-- MahApps.Metro resource dictionaries. Make sure that all file names are Case Sensitive! -->
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <!-- Accent and AppTheme setting -->
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml" />
+                <ResourceDictionary Source="Styles.xaml"  />
+                <!--Personal-->
+            </ResourceDictionary.MergedDictionaries>
+            <modelRevit:ImageConverter x:Key="ImageConverterKey" />
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Margin="0,0,0,-0.4" Cursor="Hand" HorizontalAlignment="Left" Width="657">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="350*"/>
+            <RowDefinition Height="190*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="14*"></ColumnDefinition>
+            <ColumnDefinition Width="26*"/>
+            <ColumnDefinition Width="170*"></ColumnDefinition>
+            <ColumnDefinition Width="120*"/>
+            <ColumnDefinition Width="80*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="130*"/>
+            <ColumnDefinition Width="20*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Button  Click="Perfom_OnClick" Content="Add" Command="{Binding CommandButton}" Margin="7.8,0,19.8,9.4" Grid.Row="1" Height="43" VerticalAlignment="Bottom" Grid.Column="6" Grid.ColumnSpan="2" />
+        <DataGrid  x:Name="DataGrid1" Grid.Column="1" 
+                   ItemsSource="{Binding ListCategoriesCollection2}"
+                   AutoGenerateColumns="False"
+                   CanUserAddRows="False"
+                   IsReadOnly="True"
+                   HorizontalAlignment="Left" 
+                   Height="318" 
+                   VerticalAlignment="Top" 
+                   ScrollViewer.CanContentScroll="True" 
+                   ScrollViewer.VerticalScrollBarVisibility="Auto"
+                   ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                   Width="310" 
+                   Margin="1.4,83,0,0" 
+                   Grid.RowSpan="2"  FrozenColumnCount="0" Grid.ColumnSpan="3">
+            <!--Выбор категории исходной-->
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Select category" Width="500">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <RadioButton Content="{Binding NameCategory}" 
+                                         GroupName="RadioButtonGroup" 
+                                         IsChecked="{Binding IsCheckedCategory,Mode=TwoWay,
+                                         UpdateSourceTrigger=PropertyChanged}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <ComboBox x:Name="comboBox1" Grid.ColumnSpan="3"
+             SelectedItem="{Binding Path=SelectedInitialParameter}"
+             ItemsSource="{Binding ListBindingParameters}"
+             HorizontalAlignment="Left" Width="297" Margin="14.4,72.4,0,82.4" Grid.Row="1" Grid.Column="1"
+             >
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                        <TextBlock Text="{Binding NameInitialParameter}" HorizontalAlignment="Center" Width="300" />
+                        <Image Margin="0,0,20,0" Source="{Binding IsShared, Converter={StaticResource ImageConverterKey},UpdateSourceTrigger=PropertyChanged}"
+                         />
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <ComboBox x:Name="comboBox2" Grid.ColumnSpan="4"
+             SelectedItem="{Binding Path=SelectedDestinationParameter}"
+             ItemsSource="{Binding ListBindingParameters}"
+             HorizontalAlignment="Right" Width="273" Margin="0,73.4,19.8,82.4" Grid.Row="1" Grid.Column="4"
+             >
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                        <TextBlock Text="{Binding NameDestinationParameter}"  HorizontalAlignment="Center" Width="300"/>
+                        <Image Margin="0,0,20,0" Source="{Binding IsShared, Converter={StaticResource ImageConverterKey},UpdateSourceTrigger=PropertyChanged}"
+                         />
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <CheckBox ToolTip="Set paramter in isolation" IsChecked="{Binding IsCheckedinsulation,  UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" Grid.Column="5" HorizontalAlignment="Left" Margin="10,57,0,0" VerticalAlignment="Top" Height="39" Width="93"/>
+        <TextBox x:Name="textboxInputCategory" Text="{Binding NameCat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 
+                 Grid.ColumnSpan="2" Grid.Column="1" HorizontalAlignment="Left" Height="26" Margin="9.4,48,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label HorizontalAlignment="Center"
+               Controls:TextBoxHelper.Watermark="Write name of category"
+               Content="AutoSearch" RenderTransformOrigin="-10.224,-1.243" Margin="10.4,13,65.8,321.6" Grid.Column="1" Grid.ColumnSpan="2" Foreground="#FF2875D4" Width="119" FontSize="16" FontWeight="Bold"/>
+        <Label HorizontalAlignment="Center"
+            Controls:TextBoxHelper.Watermark="Write name of category"
+            Content="Insulation" RenderTransformOrigin="-10.224,-1.243" Margin="54,13,125.8,306.6" Grid.Column="4" Grid.ColumnSpan="3" Foreground="#FF2875D4" Width="129" FontSize="16" FontWeight="Bold"/>
+        <Image Source="{Binding ImageSourceGreen,UpdateSourceTrigger=PropertyChanged}" Grid.Column="5" HorizontalAlignment="Left" Height="23" Margin="10,161,0,0" VerticalAlignment="Top" Width="30" IsEnabled="False"/>
+        <Label Grid.ColumnSpan="2" Content="Shared parameter" Foreground="#FF2875D4" Grid.Column="5" HorizontalAlignment="Left" Margin="76,158,0,0" VerticalAlignment="Top" Width="116" IsEnabled="False"/>
+        <Image Source="{Binding ImageSourceRed, UpdateSourceTrigger=PropertyChanged}" Grid.Column="5" HorizontalAlignment="Left" Height="23" Margin="10,212,0,0" VerticalAlignment="Top" Width="30" IsEnabled="False"/>
+        <Label Grid.ColumnSpan="2" Content="Project parameter" Foreground="#FF2875D4" Grid.Column="5" HorizontalAlignment="Left" Margin="76,209,0,0" VerticalAlignment="Top" Width="116" IsEnabled="False"/>
+
+    </Grid>
+</Controls:MetroWindow>
