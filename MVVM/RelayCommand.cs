@@ -31,9 +31,8 @@ namespace TransferringParameters.MVVM
             _canExecute = canExecute;
         }
 
-        public event EventHandler CanExecuteChanged//Событие CanExecuteChanged вызывается при 
-                                                   //изменении условий, указывающий, может ли команда выполняться. 
-                                                   //Для этого используется событие CommandManager.RequerySuggested.
+        public event EventHandler CanExecuteChanged
+                                                
         {
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }

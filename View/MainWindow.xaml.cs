@@ -19,12 +19,8 @@ using TransferringParameters.MVVM;
 using System.ComponentModel;
 using MahApps.Metro.Controls;
 namespace TransferringParameters.View
-   
  
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow :  MetroWindow, IDisposable
     {
         public MainWindowViewModel viewModel;

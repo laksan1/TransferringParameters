@@ -100,7 +100,7 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <CheckBox ToolTip="Set paramter in isolation" IsChecked="{Binding IsCheckedinsulation,  UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" Grid.Column="5" HorizontalAlignment="Left" Margin="10,57,0,0" VerticalAlignment="Top" Height="39" Width="93"/>
+        <CheckBox ToolTip="Set paramter in is insulation" IsChecked="{Binding IsCheckedinsulation,  UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" Grid.Column="5" HorizontalAlignment="Left" Margin="10,57,0,0" VerticalAlignment="Top" Height="39" Width="93"/>
         <TextBox x:Name="textboxInputCategory" Text="{Binding NameCat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  
                  Grid.ColumnSpan="2" Grid.Column="1" HorizontalAlignment="Left" Height="26" Margin="9.4,48,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
@@ -114,6 +114,7 @@
         <Label Grid.ColumnSpan="2" Content="Shared parameter" Foreground="#FF2875D4" Grid.Column="5" HorizontalAlignment="Left" Margin="76,158,0,0" VerticalAlignment="Top" Width="116" IsEnabled="False"/>
         <Image Source="{Binding ImageSourceRed, UpdateSourceTrigger=PropertyChanged}" Grid.Column="5" HorizontalAlignment="Left" Height="23" Margin="10,212,0,0" VerticalAlignment="Top" Width="30" IsEnabled="False"/>
         <Label Grid.ColumnSpan="2" Content="Project parameter" Foreground="#FF2875D4" Grid.Column="5" HorizontalAlignment="Left" Margin="76,209,0,0" VerticalAlignment="Top" Width="116" IsEnabled="False"/>
-
+        <Label x:Name="Sourcelabel" Content="Source parameter" Grid.Column="1" HorizontalAlignment="Left" Margin="14,40,0,0" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="3" Height="26" Width="290"/>
+        <Label x:Name="Destinationlabel" Content="Destination Parameter" Grid.Column="4" HorizontalAlignment="Left" Margin="37,40,0,0" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="3" Height="26" Width="272"/>
     </Grid>
 </Controls:MetroWindow>

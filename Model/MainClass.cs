@@ -28,8 +28,9 @@ namespace TransferringParameters.Model
                 }
                 return Result.Succeeded;
             }
-            catch 
+            catch (Exception ex)
             {
+                TaskDialog.Show("Exeption", ex.Message);
                 return Result.Failed;
             }
         }

@@ -21,12 +21,10 @@ namespace TransferringParameters.Model
 
         public Definition Definition { get; set; } //Определение
 
-        
-
-        public BuiltInCategory CategoryRevit { get; set; } //Определение
+        public BuiltInCategory CategoryRevit { get; set; } 
 
 
-        public string NameCategory { get; set; } //Имя вида
+        public string NameCategory { get; set; } 
 
         public bool isCheckedCategory;
 
@@ -35,14 +33,12 @@ namespace TransferringParameters.Model
             get { return isCheckedCategory; }
             set { isCheckedCategory = value; OnPropertyChanged(); }
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-      
-
-
     }
 }

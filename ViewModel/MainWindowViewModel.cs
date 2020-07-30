@@ -31,10 +31,8 @@ namespace TransferringParameters.ViewModel
         }
 
         private ObservableCollection<CollectionClass> _listCategoriesCollection;
-
-
-        //Промежуточный
         private ObservableCollection<CollectionClass> _listCategoriesCollection2;
+
         public ObservableCollection<CollectionClass> ListCategoriesCollection2
         {
             get => _listCategoriesCollection2;
@@ -136,12 +134,18 @@ namespace TransferringParameters.ViewModel
             RevitModel = _RM;
 
             ListBindingParameters = RevitModel.GenerateInitialParametersList();
+            if(ListBindingParameters==null)
+            {
+                RevitModel.ShowTaskDialog("Error", "Missing of project parameters");
+
+
+            }
             ListCategoriesCollection = RevitModel.GenerateCategoriesList();
 
             ListCategoriesCollection2 = new ObservableCollection<CollectionClass>(ListCategoriesCollection);
 
-            SelectedInitialParameter = ListBindingParameters[0]; //Заголовок списка листов ИСПРАВИТЬ
-            SelectedDestinationParameter = ListBindingParameters[0]; //Заголовок списка листов ИСПРАВИТЬ
+            SelectedInitialParameter = ListBindingParameters[0]; 
+            SelectedDestinationParameter = ListBindingParameters[0];
 
 
         }
@@ -158,7 +162,7 @@ namespace TransferringParameters.ViewModel
 
         }
 
-
+        //Запуск плагина
         public ICommand CommandButton
         {
             get
@@ -191,6 +195,7 @@ namespace TransferringParameters.ViewModel
             }
         }
 
+        //Автопоиск категории
         public void GenerateCategories(string _name)
         {
             try

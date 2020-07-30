@@ -71,7 +71,6 @@ namespace TransferringParameters.Model
 
         }
 
-        //Ничего не делает
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return (bool)value ? parameter : Binding.DoNothing;

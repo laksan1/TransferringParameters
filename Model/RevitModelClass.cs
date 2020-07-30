@@ -68,6 +68,8 @@ namespace TransferringParameters.Model
 
                             }
 
+                            //Сделать для соединительных элементов
+
                         }
 
                         else
@@ -104,7 +106,7 @@ namespace TransferringParameters.Model
                     tr.Commit();
                 }
 
-            ShowTaskDialog("Information", $"Parameter value changed for {i} elements", i);
+            ShowTaskDialog("Information", $"Parameter value changed for {i} elements");
 
         }
 
@@ -142,41 +144,43 @@ namespace TransferringParameters.Model
             return s;
         }
 
-        public void ShowTaskDialog(string _title, string _containt, int _i)
+        public void ShowTaskDialog(string _title, string _containt)
         {
             TaskDialog mainDialog = new TaskDialog(_title);
             mainDialog.MainInstruction = _containt;
-            //mainDialog.MainContent = _containt;
             mainDialog.Show();
 
         }
 
+        //Если элемент вохдуховод
         public void IsElemenDuct(Duct _duct, string _initialParameter, string _destinationParameter)
         {
 
                 Parameter parameterDuct = _duct.LookupParameter(_initialParameter);
 
                 Element elemntInsulationDuct = GetInsulationDuct(_duct, _document);
+
                 if (elemntInsulationDuct != null)
                 {
                     Parameter parameterInsulation = elemntInsulationDuct.LookupParameter(_destinationParameter);
 
-                var typeId = elemntInsulationDuct.GetTypeId();
-                Element elementByType = _document.GetElement(typeId);
-                Parameter parameterDestinationType = elementByType.LookupParameter(_destinationParameter);
+                    var typeId = elemntInsulationDuct.GetTypeId();
+                    Element elementByType = _document.GetElement(typeId);
+                    Parameter parameterDestinationType = elementByType.LookupParameter(_destinationParameter);
 
-                parameterInsulation = (parameterInsulation == null) ? parameterDestinationType : null;
+                    parameterInsulation = (parameterInsulation == null) ? parameterDestinationType : null;
               
-                if (parameterDuct != null && parameterInsulation != null && !parameterInsulation.IsReadOnly)
+                    if (parameterDuct != null && parameterInsulation != null && !parameterInsulation.IsReadOnly)
                     {
-                        string valueparameterDuct = GetParameterValue(parameterDuct);
-                        parameterInsulation.Set(valueparameterDuct);
-                        i++;
+                            string valueparameterDuct = GetParameterValue(parameterDuct);
+                            parameterInsulation.Set(valueparameterDuct);
+                            i++;
 
                     }
                 }
         }
 
+        //Если элемент труба
         public void IsElemenPipe(Pipe _pipe, string _initialParameter, string _destinationParameter)
         {
                 Parameter parameterPipe = _pipe.LookupParameter(_initialParameter);
@@ -203,7 +207,7 @@ namespace TransferringParameters.Model
 
         }
 
-
+        //Получение ихоляции воздуховода
         public Element GetInsulationDuct(Duct _duct, Document _doc)
         {
 
@@ -235,9 +239,9 @@ namespace TransferringParameters.Model
 
         }
 
+        //Получение изоляции трубы
         public Element GetInsulationPipe(Pipe _pipe, Document _doc)
         {
-
 
             var MepSystem = _pipe.MEPSystem;
 
@@ -266,7 +270,7 @@ namespace TransferringParameters.Model
             return null;
 
         }
-        //Коллектор pipe and duct
+        //Получение элементов по выбранной категории
         public IList<Element> Get_collector_by_category(Document _doc, BuiltInCategory _builtInCategorySelected)
         {
             List<Element> elemntsList = new List<Element>();
@@ -294,15 +298,10 @@ namespace TransferringParameters.Model
                     mainDialog.MainInstruction = "0 elements";
                     mainDialog.MainContent =
                     "Elements of the selected category are left in the project.";
-                
-
 
             }
 
-
             return elemntsList;
-
-
 
         }
 
@@ -314,6 +313,7 @@ namespace TransferringParameters.Model
 
         }
         
+        //Получение списка всех категорий
         public  ObservableCollection<CollectionClass> GenerateCategoriesList()
         {
             ObservableCollection<CollectionClass> CategoriesNames = new ObservableCollection<CollectionClass>();
@@ -334,14 +334,12 @@ namespace TransferringParameters.Model
                     });
                  }
             }
-
-           
             
             return CategoriesNames;
 
         }
 
-    
+            //Получение категории
             public static BuiltInCategory GetBuiltInCategory(Category category)
             {
                 if (System.Enum.IsDefined(typeof(BuiltInCategory),
@@ -355,7 +353,7 @@ namespace TransferringParameters.Model
             }
         
 
-
+        //Получение списка параметров проекта
         public ObservableCollection<CollectionClass> GenerateInitialParametersList()
         {
 
@@ -387,15 +385,23 @@ namespace TransferringParameters.Model
                     NameInitialParameter = it.Key.Name,
                     Binding = it.Current as ElementBinding,
                     Definition = it.Key,
-                    IsShared = checkShared, // Исправить, некоторые неправильные
+                    IsShared = checkShared,
                     NameDestinationParameter = it.Key.Name
 
                 });
 
             }
 
-            return InitialParameters;
+            if (InitialParameters.Count() == 0)
+            {
+                return null;
 
+            }
+
+            else
+            {
+                return InitialParameters;
+            }
         }
     } 
 }
